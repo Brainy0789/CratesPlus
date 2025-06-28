@@ -1180,14 +1180,14 @@
 #ifndef INCLUDED_flixel_math_FlxBasePoint
 #include <flixel/math/FlxBasePoint.h>
 #endif
+#ifndef INCLUDED_flixel_FlxBasic
+#include <flixel/FlxBasic.h>
+#endif
 #ifndef INCLUDED_Xml
 #include <Xml.h>
 #endif
 #ifndef INCLUDED_haxe_SysTools
 #include <haxe/SysTools.h>
-#endif
-#ifndef INCLUDED_flixel_FlxBasic
-#include <flixel/FlxBasic.h>
 #endif
 #ifndef INCLUDED_openfl_text_Font
 #include <openfl/text/Font.h>
@@ -1263,6 +1263,12 @@
 #endif
 #ifndef INCLUDED_sys_FileSystem
 #include <sys/FileSystem.h>
+#endif
+#ifndef INCLUDED_states_TitleState
+#include <states/TitleState.h>
+#endif
+#ifndef INCLUDED_states_PlayState
+#include <states/PlayState.h>
 #endif
 #ifndef INCLUDED_openfl_utils_QName
 #include <openfl/utils/QName.h>
@@ -3133,6 +3139,12 @@
 #ifndef INCLUDED_flixel__FlxGame_FlxIntroSplash
 #include <flixel/_FlxGame/FlxIntroSplash.h>
 #endif
+#ifndef INCLUDED_flixel_FlxState
+#include <flixel/FlxState.h>
+#endif
+#ifndef INCLUDED_flixel_group_FlxTypedContainer
+#include <flixel/group/FlxTypedContainer.h>
+#endif
 #ifndef INCLUDED_flixel_FlxGame
 #include <flixel/FlxGame.h>
 #endif
@@ -3184,6 +3196,15 @@
 #ifndef INCLUDED_cpp_Lib
 #include <cpp/Lib.h>
 #endif
+#ifndef INCLUDED_backend_CustomTilemap
+#include <backend/CustomTilemap.h>
+#endif
+#ifndef INCLUDED_flixel_group_FlxTypedGroup
+#include <flixel/group/FlxTypedGroup.h>
+#endif
+#ifndef INCLUDED_flixel_util_IFlxDestroyable
+#include <flixel/util/IFlxDestroyable.h>
+#endif
 #ifndef INCLUDED__Xml_XmlType_Impl_
 #include <_Xml/XmlType_Impl_.h>
 #endif
@@ -3207,21 +3228,6 @@
 #endif
 #ifndef INCLUDED_Reflect
 #include <Reflect.h>
-#endif
-#ifndef INCLUDED_PlayState
-#include <PlayState.h>
-#endif
-#ifndef INCLUDED_flixel_FlxState
-#include <flixel/FlxState.h>
-#endif
-#ifndef INCLUDED_flixel_group_FlxTypedContainer
-#include <flixel/group/FlxTypedContainer.h>
-#endif
-#ifndef INCLUDED_flixel_group_FlxTypedGroup
-#include <flixel/group/FlxTypedGroup.h>
-#endif
-#ifndef INCLUDED_flixel_util_IFlxDestroyable
-#include <flixel/util/IFlxDestroyable.h>
 #endif
 #ifndef INCLUDED___ASSET__OPENFL__flixel_fonts_monsterrat_ttf
 #include <__ASSET__OPENFL__flixel_fonts_monsterrat_ttf.h>
@@ -3698,9 +3704,9 @@ __files__boot();
 ::lime::math::Matrix3_obj::__register();
 ::flixel::math::FlxRect_obj::__register();
 ::flixel::math::FlxBasePoint_obj::__register();
+::flixel::FlxBasic_obj::__register();
 ::Xml_obj::__register();
 ::haxe::SysTools_obj::__register();
-::flixel::FlxBasic_obj::__register();
 ::openfl::text::Font_obj::__register();
 ::__ASSET__flixel_images_logo_default_png_obj::__register();
 ::__ASSET__flixel_images_ui_button_png_obj::__register();
@@ -3726,6 +3732,8 @@ __files__boot();
 ::sys::io::FileInput_obj::__register();
 ::sys::io::File_obj::__register();
 ::sys::FileSystem_obj::__register();
+::states::TitleState_obj::__register();
+::states::PlayState_obj::__register();
 ::openfl::utils::QName_obj::__register();
 ::openfl::utils::Namespace_obj::__register();
 ::openfl::utils::_Dictionary::Dictionary_Impl__obj::__register();
@@ -4349,6 +4357,8 @@ __files__boot();
 ::flixel::FlxSubState_obj::__register();
 ::flixel::IFlxSprite_obj::__register();
 ::flixel::_FlxGame::FlxIntroSplash_obj::__register();
+::flixel::FlxState_obj::__register();
+::flixel::group::FlxTypedContainer_obj::__register();
 ::flixel::FlxGame_obj::__register();
 ::flixel::_hx_system::frontEnds::WatchFrontEnd_obj::__register();
 ::flixel::_hx_system::frontEnds::SignalFrontEnd_obj::__register();
@@ -4366,6 +4376,9 @@ __files__boot();
 ::flixel::util::IFlxPooled_obj::__register();
 ::flixel::IFlxBasic_obj::__register();
 ::cpp::Lib_obj::__register();
+::backend::CustomTilemap_obj::__register();
+::flixel::group::FlxTypedGroup_obj::__register();
+::flixel::util::IFlxDestroyable_obj::__register();
 ::_Xml::XmlType_Impl__obj::__register();
 ::_UnicodeString::UnicodeString_Impl__obj::__register();
 ::Type_obj::__register();
@@ -4374,11 +4387,6 @@ __files__boot();
 ::StringBuf_obj::__register();
 ::Std_obj::__register();
 ::Reflect_obj::__register();
-::PlayState_obj::__register();
-::flixel::FlxState_obj::__register();
-::flixel::group::FlxTypedContainer_obj::__register();
-::flixel::group::FlxTypedGroup_obj::__register();
-::flixel::util::IFlxDestroyable_obj::__register();
 ::__ASSET__OPENFL__flixel_fonts_monsterrat_ttf_obj::__register();
 ::__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf_obj::__register();
 ::lime::graphics::Image_obj::__register();
@@ -4491,9 +4499,9 @@ __files__boot();
 ::__ASSET__flixel_images_ui_button_png_obj::__boot();
 ::__ASSET__flixel_images_logo_default_png_obj::__boot();
 ::openfl::text::Font_obj::__boot();
-::flixel::FlxBasic_obj::__boot();
 ::haxe::SysTools_obj::__boot();
 ::Xml_obj::__boot();
+::flixel::FlxBasic_obj::__boot();
 ::flixel::math::FlxBasePoint_obj::__boot();
 ::flixel::math::FlxRect_obj::__boot();
 ::lime::math::Matrix3_obj::__boot();

@@ -16,11 +16,11 @@ class ApplicationMain
 	#if !macro
 	public static function main()
 	{
-		lime.system.System.__registerEntryPoint("FlxProject", create);
+		lime.system.System.__registerEntryPoint("CratesHaxe", create);
 
 		#if (js && html5)
 		#if (munit || utest)
-		lime.system.System.embed("FlxProject", null, 640, 480);
+		lime.system.System.embed("CratesHaxe", null, 1280, 720);
 		#end
 		#else
 		create(null);
@@ -36,9 +36,9 @@ class ApplicationMain
 		#end
 
 		app.meta["build"] = "1";
-		app.meta["company"] = "HaxeFlixel";
-		app.meta["file"] = "FlxProject";
-		app.meta["name"] = "FlxProject";
+		app.meta["company"] = "Brainy7890";
+		app.meta["file"] = "CratesHaxe";
+		app.meta["name"] = "Crates";
 		app.meta["packageName"] = "com.example.myapp";
 		app.meta["version"] = "0.0.1";
 
@@ -54,14 +54,14 @@ class ApplicationMain
 			element: null,
 			frameRate: 60,
 			#if !web fullscreen: false, #end
-			height: 480,
+			height: 720,
 			hidden: #if munit true #else false #end,
 			maximized: false,
 			minimized: false,
 			parameters: {},
 			resizable: true,
-			title: "FlxProject",
-			width: 640,
+			title: "Crates",
+			width: 1280,
 			x: null,
 			y: null,
 		};
@@ -102,7 +102,7 @@ class ApplicationMain
 		app.createWindow(attributes);
 		
 		#elseif air
-		app.window.title = "FlxProject";
+		app.window.title = "Crates";
 		#else
 		app.window.context.attributes.background = 0;
 		app.window.frameRate = 60;

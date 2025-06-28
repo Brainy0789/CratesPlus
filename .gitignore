@@ -1,0 +1,26 @@
+# Build artifacts
+export/
+*.exe
+*.swf
+*.html
+*.js
+*.apk
+*.zip
+
+# Haxe/Lime cache
+.haxelib/
+.haxe/
+build/
+*.ndll
+*.n
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Log files
+*.log

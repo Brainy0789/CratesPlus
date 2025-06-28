@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="tiles.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="target0000" x="0" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+	<SubTexture name="crate0000" x="32" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+	<SubTexture name="grass0000" x="16" y="0" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+	<SubTexture name="wall0000" x="0" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+	<SubTexture name="player0000" x="16" y="16" width="16" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+</TextureAtlas>

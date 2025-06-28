@@ -12,6 +12,7 @@
 -D hscript=2.6.0
 -cp source
 -D lime-openal
+-D NO_PRELOADER
 -D ANDROID_SETUP=true
 -D message.reporting=pretty
 -D native

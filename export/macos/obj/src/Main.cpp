@@ -4,9 +4,6 @@
 #ifndef INCLUDED_Main
 #include <Main.h>
 #endif
-#ifndef INCLUDED_PlayState
-#include <PlayState.h>
-#endif
 #ifndef INCLUDED_flixel_FlxBasic
 #include <flixel/FlxBasic.h>
 #endif
@@ -49,13 +46,16 @@
 #ifndef INCLUDED_openfl_events_IEventDispatcher
 #include <openfl/events/IEventDispatcher.h>
 #endif
+#ifndef INCLUDED_states_TitleState
+#include <states/TitleState.h>
+#endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_e47a9afac0942eb9_9_new,"Main","new",0x6616a5cb,"Main.new","Main.hx",9,0x087e5c05)
+HX_DEFINE_STACK_FRAME(_hx_pos_e47a9afac0942eb9_11_new,"Main","new",0x6616a5cb,"Main.new","Main.hx",11,0x087e5c05)
 
 void Main_obj::__construct(){
-            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_9_new)
-HXLINE(  10)		super::__construct();
-HXLINE(  11)		this->addChild( ::flixel::FlxGame_obj::__alloc( HX_CTX ,0,0,::flixel::util::typeLimit::_NextState::InitialState_Impl__obj::fromType(::hx::ClassOf< ::PlayState >()),null(),null(),null(),null()));
+            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_11_new)
+HXLINE(  12)		super::__construct();
+HXLINE(  13)		this->addChild( ::flixel::FlxGame_obj::__alloc( HX_CTX ,0,0,::flixel::util::typeLimit::_NextState::InitialState_Impl__obj::fromType(::hx::ClassOf< ::states::TitleState >()),null(),null(),null(),null()));
             	}
 
 Dynamic Main_obj::__CreateEmpty() { return new Main_obj; }
