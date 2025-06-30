@@ -2,6 +2,7 @@ package states;
 
 import backend.objects.*;
 import flixel.FlxState;
+import flixel.FlxG;
 
 class PlayState extends FlxState {
 	var player:Player;
