@@ -5,12 +5,10 @@ export/
 *.html
 *.js
 *.apk
-*.zip
 
 # Haxe/Lime cache
 .haxelib/
 .haxe/
-build/
 *.ndll
 *.n
 
