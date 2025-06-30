@@ -24,20 +24,16 @@ class MenuState extends FlxState
         super.update(elapsed);
 
         this.selectString = sections[selected];
-        this.selectText.text = "Currently Selected: " + selectString + "\n" + Std.string(selected + 1) + "/" + Std.string(sections.length + 1);
+		this.selectText.text = "Currently Selected: " + selectString + "\n" + Std.string(selected + 1) + "/" + Std.string(sections.length);
 
         if (FlxG.keys.justPressed.UP) {
             this.selected -= 1;
             if (this.selected < 0)
-                selected = 0;
-            if (this.selected > sections.length)
-                selected = sections.length;
+				selected = 0;
         }
         if (FlxG.keys.justPressed.DOWN) {
             this.selected += 1;
-            if (this.selected < 0)
-                selected = 0;
-            if (this.selected > sections.length)
+			if (this.selected > (sections.length))
                 selected = sections.length;
         }
 
