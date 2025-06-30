@@ -7,10 +7,19 @@ import openfl.Lib;
 import states.LevelSelectState;
 
 class TitleState extends FlxState {
+	var music:Bool;
+
+	override public function new(music:Bool = true):Void
+	{
+		super();
+		this.music = music;
+	}
+
 	override public function create():Void
 	{
 		super.create();
-		add(new FlxSprite(0, 0, "assets/images/title.png"));
+		if (music == true) 
+			add(new FlxSprite(0, 0, "assets/images/title.png"));
 		FlxG.sound.playMusic("assets/music/main.ogg");
 		FlxG.mouse.visible = false;
 	}
@@ -21,8 +30,6 @@ class TitleState extends FlxState {
 		if (FlxG.keys.justPressed.ESCAPE)
 			Lib.application.window.close();
 		if (FlxG.keys.justPressed.ENTER)
-			FlxG.switchState(new LevelSelectState());
-		if (FlxG.keys.justPressed.SEVEN)
-			FlxG.switchState(new MapEditor());
+			FlxG.switchState(new MenuState());
 	}
 }

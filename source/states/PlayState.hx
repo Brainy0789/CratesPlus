@@ -42,6 +42,8 @@ class PlayState extends FlxState {
 		super.update(elapsed);
 		if (FlxG.keys.justPressed.SEVEN)
 			FlxG.switchState(new MapEditor());
+		if (FlxG.keys.justPressed.ESCAPE)
+			FlxG.switchState(new LevelSelectState());
 		if (tileMap.isWin())
 		{
 			li++;
@@ -51,4 +53,5 @@ class PlayState extends FlxState {
 				FlxG.switchState(new PlayState(cfg, gi, li));
 		}
 	}
+
 }

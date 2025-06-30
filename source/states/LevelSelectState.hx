@@ -41,7 +41,7 @@ class LevelSelectState extends FlxState {
             FlxG.switchState(new PlayState(cfg, gi, li));
         }
         if (FlxG.keys.justPressed.ESCAPE) {
-            Lib.application.window.close();
+			FlxG.switchState(new MenuState());
         }
     }
 

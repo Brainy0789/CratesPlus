@@ -1,0 +1,5 @@
+{
+    "controls": [["LEFT", "A"], ["DOWN", "S"], ["UP", "W"], ["RIGHT", "D"], ["Z", "ENTER", "SPACE"], ["X", "ESCAPE", "BACKSPACE"]],
+    "soundvolume": 0.5,
+    "musicvolume": 0.3
+}
