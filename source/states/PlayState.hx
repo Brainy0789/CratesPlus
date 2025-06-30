@@ -1,6 +1,5 @@
 package states;
 
-import backend.CustomTilemap;
 import flixel.FlxState;
 import backend.objects.*;
 
