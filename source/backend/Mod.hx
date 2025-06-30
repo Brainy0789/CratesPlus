@@ -2,6 +2,6 @@ package backend;
 
 class Mod {
     public function new() {
-        trace("The Mod class is not functional yet.")
+        trace("The Mod class is not functional yet.");
     }
 }

@@ -4,32 +4,25 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import openfl.Lib;
-import states.MapEditor;
+import states.LevelSelectState;
 
 class TitleState extends FlxState {
-    var title:FlxSprite;
-
-    override public function create() {
-        super.create();
-        title = new FlxSprite(0, 0, "assets/images/title.png");
-        add(title);
-        FlxG.sound.playMusic("assets/music/main.ogg");
+	override public function create():Void
+	{
+		super.create();
+		add(new FlxSprite(0, 0, "assets/images/title.png"));
+		FlxG.sound.playMusic("assets/music/main.ogg");
 		FlxG.mouse.visible = false;
-    }
+	}
 
-    override public function update(elapsed:Float) {
-        super.update(elapsed);
-
-        if (FlxG.keys.justPressed.ESCAPE) {
-            Lib.application.window.close();
-        }
-
-        if (FlxG.keys.justPressed.ENTER) {
-            FlxG.switchState(PlayState.new);
-        }
-
-        if (FlxG.keys.justPressed.SEVEN) {
-            FlxG.switchState(new MapEditor());
-        }
-    }
+	override public function update(elapsed:Float):Void
+	{
+		super.update(elapsed);
+		if (FlxG.keys.justPressed.ESCAPE)
+			Lib.application.window.close();
+		if (FlxG.keys.justPressed.ENTER)
+			FlxG.switchState(new LevelSelectState());
+		if (FlxG.keys.justPressed.SEVEN)
+			FlxG.switchState(new MapEditor());
+	}
 }

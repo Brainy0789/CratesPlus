@@ -1,0 +1,12 @@
+{
+  "groups": [
+    {
+      "name": "Tutorial",
+      "levels": ["tutorial1.json","tutorial2.json","tutorial3.json"]
+    },
+    {
+      "name": "Dungeon",
+      "levels": ["dungeon1.json","dungeon2.json","dungeon3.json"]
+    }
+  ]
+}

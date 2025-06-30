@@ -1,27 +1,23 @@
 package backend.objects;
 
-import backend.objects.Tile;
 import lime.math.Vector2;
 
 class MovingTile extends Tile {
-    public var elapsed:Float = 0.0;
+    public var elapsedTime:Float = 0;
 
     public function new(gx:Int, gy:Int, type:Int = 0, tile:Int = 5) {
         super(gx, gy, type, tile);
     }
 
-    override public function setTile(index) {
-        super.setTile(index);
+    override public function update(elapsed:Float):Void {
+        super.update(elapsed);
+        elapsedTime += elapsed;
     }
 
-    public function moveTiles(gx:Int, gy:Int=0):Vector2 {
-        this.x += gx*64;
-        this.y += gy*64;
-        var moved:Vector2 = new Vector2(gx*64, gy*64);
-        return moved;
-    }
-
-    override public function update(elapsed:Float) {
-        elapsed = this.elapsed + 1;
+    public function moveTiles(dx:Int, dy:Int = 0):Vector2 {
+        this.gx += dx;
+        this.gy += dy;
+        moveTo(this.gx, this.gy);
+        return new Vector2(dx * Tile.TILE_SIZE, dy * Tile.TILE_SIZE);
     }
 }
