@@ -41,6 +41,7 @@ class MapEditor extends FlxState {
         infoText = new FlxText(5, FlxG.height - 20, FlxG.width, "");
         add(infoText);
         updateInfo();
+		FlxG.mouse.visible = true;
     }
 
     override public function update(elapsed:Float):Void {

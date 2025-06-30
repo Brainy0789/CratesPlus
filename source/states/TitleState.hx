@@ -14,6 +14,7 @@ class TitleState extends FlxState {
         title = new FlxSprite(0, 0, "assets/images/title.png");
         add(title);
         FlxG.sound.playMusic("assets/music/main.ogg");
+		FlxG.mouse.visible = false;
     }
 
     override public function update(elapsed:Float) {
