@@ -1,8 +1,11 @@
 package backend.objects;
 
 import flixel.FlxSprite;
+import flixel.tweens.FlxTween;
 
 class Tile extends FlxSprite {
+    public static inline var TILE_SIZE:Int = 64;
+
     public var gx:Int;
     public var gy:Int;
     public var type:Int;
@@ -11,24 +14,36 @@ class Tile extends FlxSprite {
     public function new(gx:Int, gy:Int, type:Int = 0, tile:Int = 5) {
         super();
 
-        this.gx = gx;
-        this.gy = gy;
         this.type = type;
         this.tile = tile;
 
-        this.x = gx * 64;
-        this.y = gy * 64;
+        loadTileGraphic();
+        moveTo(gx, gy, 0); 
+    }
 
+    private function loadTileGraphic():Void {
         this.loadGraphic("assets/images/tiles/" + tile + ".png");
-        this.setGraphicSize(64);
+        this.setGraphicSize(TILE_SIZE);
         this.updateHitbox();
-        
     }
 
     public function setTile(index:Int):Void {
         this.tile = index;
-        this.loadGraphic("assets/images/tiles/" + tile + ".png");
-        this.setGraphicSize(64);
-        this.updateHitbox();
+        loadTileGraphic();
     }
-}
+
+        public function moveTo(gx:Int, gy:Int, duration:Float = 0.25):Void {
+            this.gx = gx;
+            this.gy = gy;
+
+            var targetX = gx * TILE_SIZE + (TILE_SIZE - this.width) / 2;
+            var targetY = gy * TILE_SIZE + (TILE_SIZE - this.height) / 2;
+
+            if (duration <= 0) {
+                this.x = targetX;
+                this.y = targetY;
+            } else {
+                FlxTween.tween(this, { x: targetX, y: targetY }, duration);
+            }
+        }
+    }
