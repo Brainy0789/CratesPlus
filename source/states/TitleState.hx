@@ -3,12 +3,12 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import lime.ui.Window;
 import openfl.Lib;
+import states.MapEditor;
 
-class TitleState extends FlxState
-{
+class TitleState extends FlxState {
     var title:FlxSprite;
+
     override public function create() {
         super.create();
         title = new FlxSprite(0, 0, "assets/images/title.png");
@@ -18,13 +18,17 @@ class TitleState extends FlxState
 
     override public function update(elapsed:Float) {
         super.update(elapsed);
+
         if (FlxG.keys.justPressed.ESCAPE) {
             Lib.application.window.close();
         }
 
-
         if (FlxG.keys.justPressed.ENTER) {
             FlxG.switchState(PlayState.new);
+        }
+
+        if (FlxG.keys.justPressed.SEVEN) {
+            FlxG.switchState(new MapEditor());
         }
     }
 }
