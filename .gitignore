@@ -1,24 +1,7 @@
-# Build artifacts
-export/
-*.exe
-*.swf
-*.html
-*.js
-*.apk
-
-# Haxe/Lime cache
-.haxelib/
-.haxe/
-*.ndll
-*.n
-
-# OS files
 .DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-
-# Log files
-*.log
+.DS_Store
+/export/html5
+/export/macos
+/export
+.DS_Store
+.DS_Store
