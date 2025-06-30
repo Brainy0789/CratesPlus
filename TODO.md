@@ -7,7 +7,4 @@
 - [ ] Make crates pushable
 - [ ] Add crate proper collision
 - [ ] Map Editor
-- [ ] Start remaking levels
-- [ ] Dialogue Editor
-- [ ] Add dialogue
 - [ ] Mod functionality
