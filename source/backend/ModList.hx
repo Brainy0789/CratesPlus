@@ -1,25 +1,26 @@
 package backend;
 
+import backend.Mod;
+import backend.Paths;
 import sys.FileSystem;
 import sys.io.File;
 
-class ModList extends Mod {
-    public var mods:Array<String> = [];
+class ModList
+{
+	public var mods:Array<Mod> = [];
 
-    public function new() {
-        super();
+	public function new()
+	{
         loadMods();
     }
 
     function loadMods():Void {
         if (!FileSystem.exists("mods")) return;
 
-        for (file in FileSystem.readDirectory("mods")) {
-            if (file.endsWith(".json")) {
-                var content = File.getContent("mods/" + file);
-                trace("Loaded mod config: " + file);
-                mods.push(content);
-            }
-        }
+		for (directory in FileSystem.readDirectory("mods"))
+		{
+			mods.push(new Mod(directory));
+		}
+
     }
 }
