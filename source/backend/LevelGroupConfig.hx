@@ -13,8 +13,13 @@ typedef LevelGroup = {
 class LevelGroupConfig {
   public var groups:Array<LevelGroup>;
 
-  public function new(configName:String) {
+	public function new(configName:String, checkModFolder:Bool = false, game = "Crates")
+	{
     var path = Paths.getDataFile(configName);
+		if (checkModFolder)
+			path = Paths.getDataFile(Paths.MODS + game + configName, true);
+
+		trace("Level Config Path: " + path);
     if (path == null) {
       trace("Missing levelgroups.json");
       groups = [];

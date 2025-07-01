@@ -2,26 +2,29 @@ package backend;
 
 import backend.Paths;
 import haxe.Json;
+import sys.FileSystem;
 import sys.io.File;
 
 class Mod {
-	var modPath:String;
-	var games:Array<String> = new Array();
-	var data:Dynamic;
-	var modName:String;
-	var name:String;
-	var description:String;
-	var authors:Array<String> = new Array();
-	var homepage:String;
-	var loaderVersion:String;
-	var version:String;
+	public var path:String;
+	public var games:Array<String> = new Array();
+	public var data:Dynamic;
+	public var modName:String;
+	public var name:String;
+	public var description:String;
+	public var authors:Array<String> = new Array();
+	public var homepage:String;
+	public var loaderVersion:String;
+	public var version:String;
+	public var enabled:Bool;
 
-	public function new(modName:String)
+	public function new(modName:String, enabled:Bool = true)
 	{
-		this.modPath = Paths.MODS + modName + "/";
+		this.enabled = enabled;
+		this.path = Paths.MODS + modName + "/";
 		trace("Loaded mod: " + modName);
-		trace("Mod path: + " + modPath);
-		this.data = loadJsonData(modPath + "pack.json");
+		trace("Mod path: + " + path);
+		this.data = loadJsonData(path + "pack.json");
 		this.name = this.data.name;
 		this.description = this.data.description;
 		this.authors = this.data.authors;
@@ -43,6 +46,21 @@ class Mod {
 		trace("Homepage: " + this.homepage);
 		trace("Modloader Version: " + this.loaderVersion);
 		trace("Mod Version: " + this.version);
+		games = readFolders(this.path + "data/games/");
+	}
+
+	function readFolders(path:String):Array<String>
+	{
+		if (!FileSystem.exists(path))
+			return null;
+
+		var array:Array<String> = new Array();
+		for (directory in FileSystem.readDirectory(path))
+		{
+			array.push(directory);
+		}
+
+		return array;
 	}
 
 	function loadJsonData(path:String):Dynamic
@@ -50,5 +68,5 @@ class Mod {
 		var jsonText:String = File.getContent(path);
 		var jsonData:Dynamic = Json.parse(jsonText);
 		return jsonData;
-    }
+	}
 }
