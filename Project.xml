@@ -4,7 +4,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Crates+" file="CratesPlus" main="Main" version="0.0.1" company="Brainy7890" />
+	<app title="Crates+" file="CratesPlus" main="Main" version="0.0.1" company="Brainy7890" package="com.brainy7890.cratesplus"/>
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -92,4 +92,11 @@
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here-->
+
+	<assets path='art/icons/iconOG.png' rename='icon.png' if="linux || mac" />
+
+	<icon path="art/icons/icon16.png" size='16'/>
+	<icon path="art/icons/icon32.png" size='32'/>
+	<icon path="art/icons/icon64.png" size='64'/>
+	<icon path="art/icons/iconOG.png" />
 </project>

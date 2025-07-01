@@ -34,8 +34,8 @@ class MenuState extends FlxState
         }
         if (FlxG.keys.justPressed.DOWN) {
             this.selected += 1;
-			if (this.selected > (sections.length))
-                selected = sections.length;
+			if (this.selected > (sections.length - 1))
+				selected = sections.length - 1;
         }
 
         if (FlxG.keys.justPressed.ENTER) {
