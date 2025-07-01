@@ -1,28 +1,35 @@
 package states;
 
+import Std;
 import backend.MapConfig;
 import backend.Paths;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import haxe.Json;
+import openfl.events.Event;
 import openfl.geom.Rectangle;
+import openfl.net.FileFilter;
+import openfl.net.FileReference;
 import sys.FileSystem;
 import sys.io.File;
 
 class MapEditor extends FlxState {
 	public static inline var TILE_SIZE:Int = 64;
 	public static inline var MAP_WIDTH:Int = 16;
-    public static inline var MAP_HEIGHT:Int = 12;
+	public static inline var MAP_HEIGHT:Int = 12;
+	public static inline var PANEL_WIDTH:Int = 200;
 
 	private var tiles:Array<Array<Int>>;
 	private var sprites:FlxGroup;
-	private var lastChange:{x:Int, y:Int, old:Int};
-	private var showGrid:Bool = true;
+	private var uiGroup:FlxGroup;
+	private var paletteSprites:FlxGroup;
+	private var panel:FlxSprite;
 
-	private var palette:Array<Int> = [
+	private var palette = [
 		MapConfig.FLOOR,
 		MapConfig.GRASS,
 		MapConfig.CRATE,
@@ -31,14 +38,16 @@ class MapEditor extends FlxState {
 		MapConfig.PLAYER_START
 	];
 	private var currentTile:Int = MapConfig.WALL;
+	private var showGrid:Bool = true;
+	private var lastChange:{x:Int, y:Int, old:Int};
 
 	private var infoText:FlxText;
-	private var inputMode:String = "";
-	private var mapList:Array<String> = [];
-	private var mapIndex:Int = 0;
+	private var fileRef:FileReference;
 
     override public function create():Void {
         super.create();
+		FlxG.mouse.visible = true;
+
 		tiles = [];
         sprites = new FlxGroup();
         add(sprites);
@@ -51,20 +60,57 @@ class MapEditor extends FlxState {
                 sprites.add(s);
             }
         }
-        infoText = new FlxText(5, FlxG.height - 20, FlxG.width, "");
-		add(infoText);
-		FlxG.mouse.visible = true;
+		uiGroup = new FlxGroup();
+		add(uiGroup);
+
+		panel = new FlxSprite(FlxG.width - PANEL_WIDTH, 0).makeGraphic(PANEL_WIDTH, FlxG.height, 0xcc222222);
+		uiGroup.add(panel);
+
+		paletteSprites = new FlxGroup();
+		uiGroup.add(paletteSprites);
+
+		for (i in 0...palette.length)
+		{
+			var tx = FlxG.width - PANEL_WIDTH + 20;
+			var ty = 20 + i * (TILE_SIZE + 10);
+			var ps = new FlxSprite(tx, ty);
+			var path = Paths.TILES + palette[i] + ".png";
+
+			if (FileSystem.exists(path))
+				ps.loadGraphic(path, false, TILE_SIZE, TILE_SIZE);
+			else
+				ps.makeGraphic(TILE_SIZE, TILE_SIZE, 0xff444444);
+
+			ps.ID = palette[i];
+			paletteSprites.add(ps);
+		}
+
+		infoText = new FlxText(FlxG.width - PANEL_WIDTH + 10, FlxG.height - 60, PANEL_WIDTH - 20, "");
+		infoText.setFormat(null, 12, 0xffffffff, "left");
+		uiGroup.add(infoText);
+
 		redrawAll();
+		drawPaletteHighlight();
 		updateInfo();
     }
 
     override public function update(elapsed:Float):Void {
         super.update(elapsed);
 
-		if (inputMode != "")
+		if (FlxG.mouse.justReleased)
 		{
-			handlePrompt();
-			return;
+			var mp:FlxPoint = FlxG.mouse.getScreenPosition();
+			for (member in paletteSprites.members)
+			{
+				var ps:FlxSprite = cast member;
+				if (ps.overlapsPoint(mp))
+				{
+					currentTile = ps.ID;
+					drawPaletteHighlight();
+					updateInfo();
+					return;
+				}
+			}
 		}
 
         if (FlxG.mouse.pressed) {
@@ -91,73 +137,49 @@ class MapEditor extends FlxState {
 		if (FlxG.keys.justPressed.FIVE)
 			currentTile = palette[4];
 		if (FlxG.keys.justPressed.SIX)
-			currentTile = palette[5]; 
-
+			currentTile = palette[5];
         if (FlxG.keys.justPressed.G) {
             showGrid = !showGrid;
 			redrawAll();
         }
 
 		if (FlxG.keys.justPressed.S)
-			enterPrompt("save");
+			openSaveDialog();
 		if (FlxG.keys.justPressed.L)
-			enterPrompt("load");
+			openLoadDialog();
 
         if (FlxG.keys.justPressed.C) clearMap();
         if (FlxG.keys.justPressed.F) fillMap(currentTile);
         if (FlxG.keys.justPressed.U) undoLast();
 
+		drawPaletteHighlight();
         updateInfo();
     }
 
-	private function enterPrompt(mode:String):Void
+	private function openSaveDialog():Void
 	{
-		inputMode = mode;
-		mapList = FileSystem.readDirectory(Paths.MAPS).filter(f -> f.length > 5 && f.toLowerCase().substr(f.length - 5) == ".json");
-		if (mode == "save")
-			mapList.push("<New>");
-		mapIndex = 0;
+		fileRef = new FileReference();
+
+		fileRef.save(Json.stringify({tiles: tiles}, "\t"), "map.json");
 	}
-	private function handlePrompt():Void
+
+	private function openLoadDialog():Void
 	{
-		if (FlxG.keys.justPressed.LEFT)
-			mapIndex = (mapIndex - 1 + mapList.length) % mapList.length;
-		if (FlxG.keys.justPressed.RIGHT)
-			mapIndex = (mapIndex + 1) % mapList.length;
+		fileRef = new FileReference();
 
-		if (FlxG.keys.justPressed.ESCAPE)
+		var jsonFilter = new FileFilter("JSON files", "*.json");
+		fileRef.browse([jsonFilter]);
+		fileRef.addEventListener(Event.SELECT, function(_:Event):Void
 		{
-			inputMode = "";
-			updateInfo();
-			return;
-		}
-
-		if (FlxG.keys.justPressed.ENTER)
+			fileRef.load();
+		});
+		fileRef.addEventListener(Event.COMPLETE, function(_:Event):Void
 		{
-			var fn = mapList[mapIndex];
-			if (inputMode == "save")
-			{
-				if (fn == "<New>")
-				{
-					var idx:Int = 1;
-					do
-					{
-						fn = "map" + idx + ".json";
-						idx++;
-					}
-					while (FileSystem.exists(Paths.MAPS + fn));
-				}
-				exportToFile(fn);
-			}
-			else
-			{
-				importFromFile(fn);
-			}
-			inputMode = "";
-		}
-
-		var label = if (inputMode == "save") "Save to:" else "Load from:";
-		infoText.text = label + " <" + mapList[mapIndex] + ">  ←/→ ENTER ESC";
+			var data:String = cast fileRef.data;
+			var d = Json.parse(data);
+			tiles = d.tiles;
+			redrawAll();
+		});
 	}
 
 	private function redrawAll():Void
@@ -174,42 +196,49 @@ class MapEditor extends FlxState {
 		var path = Paths.TILES + code + ".png";
 
 		if (FileSystem.exists(path))
-		{
-			s.loadGraphic(path);
-		}
+			s.loadGraphic(path, false, TILE_SIZE, TILE_SIZE);
 		else
-		{
 			s.makeGraphic(TILE_SIZE, TILE_SIZE, 0xff444444);
-		}
 
 		if (showGrid)
 		{
 			try
 			{
-				var bmp = s.framePixels;
-				if (bmp != null)
-				{
-					bmp.lock();
-					bmp.fillRect(new Rectangle(0, 0, TILE_SIZE, 1), 0xffffffff);
-					bmp.fillRect(new Rectangle(0, TILE_SIZE - 1, TILE_SIZE, 1), 0xffffffff);
-					bmp.fillRect(new Rectangle(0, 0, 1, TILE_SIZE), 0xffffffff);
-					bmp.fillRect(new Rectangle(TILE_SIZE - 1, 0, 1, TILE_SIZE), 0xffffffff);
-					bmp.unlock();
-				}
+				var bmp = s.pixels;
+				bmp.lock();
+				bmp.fillRect(new Rectangle(0, 0, TILE_SIZE, 1), 0xffffffff);
+				bmp.fillRect(new Rectangle(0, TILE_SIZE - 1, TILE_SIZE, 1), 0xffffffff);
+				bmp.fillRect(new Rectangle(0, 0, 1, TILE_SIZE), 0xffffffff);
+				bmp.fillRect(new Rectangle(TILE_SIZE - 1, 0, 1, TILE_SIZE), 0xffffffff);
+				bmp.unlock();
 			}
 			catch (_) {}
 		}
-    }
+	}
+
+	private function drawPaletteHighlight():Void
+	{
+		for (member in paletteSprites.members)
+		{
+			var ps:FlxSprite = cast member;
+			var bmp = ps.pixels;
+			bmp.lock();
+			var col = (ps.ID == currentTile) ? 0xffffffff : 0xff888888;
+			bmp.fillRect(new Rectangle(0, 0, TILE_SIZE, 2), col);
+			bmp.fillRect(new Rectangle(0, TILE_SIZE - 2, TILE_SIZE, 2), col);
+			bmp.fillRect(new Rectangle(0, 0, 2, TILE_SIZE), col);
+			bmp.fillRect(new Rectangle(TILE_SIZE - 2, 0, 2, TILE_SIZE), col);
+			bmp.unlock();
+		}
+	}
 
 	private function updateInfo():Void
 	{
-		if (inputMode == "")
-		{
-			infoText.text = "Brush="
-				+ currentTile
-				+ " 1=Floor 2=Grass 3=Crate 4=Target 5=Wall 6=Player  "
-				+ "G=Grid S=Save L=Load C=Clear F=Fill U=Undo";
-        }
+		infoText.text = [
+			"Brush: " + currentTile + "  (click palette)",
+			"G=Grid  C=Clear  F=Fill  U=Undo",
+			"S=Save  L=Load"
+		].join("\n");
     }
 
 	private function clearMap():Void
@@ -235,30 +264,7 @@ class MapEditor extends FlxState {
         if (lastChange != null) {
             tiles[lastChange.y][lastChange.x] = lastChange.old;
             redrawCell(lastChange.x, lastChange.y);
-            lastChange = null;
-        }
-    }
-	private function exportToFile(filename:String):Void
-	{
-		var json = Json.stringify({tiles: tiles}, "\t");
-		File.saveContent(Paths.MAPS + filename, json);
-		trace("[MapEditor] saved → " + filename);
-	}
-
-	private function importFromFile(filename:String):Void
-	{
-		var path = Paths.MAPS + filename;
-		if (FileSystem.exists(path))
-		{
-			var txt = File.getContent(path);
-			var d = Json.parse(txt);
-			tiles = d.tiles;
-			redrawAll();
-			trace("[MapEditor] loaded ← " + filename);
-		}
-		else
-		{
-			trace("[MapEditor] load failed: " + filename);
+			lastChange = null;
 		}
 	}
 }

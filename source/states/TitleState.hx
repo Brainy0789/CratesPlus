@@ -31,5 +31,7 @@ class TitleState extends FlxState {
 			Lib.application.window.close();
 		if (FlxG.keys.justPressed.ENTER)
 			FlxG.switchState(new MenuState());
+		if (FlxG.keys.justPressed.SEVEN)
+			FlxG.switchState(new MapEditor());
 	}
 }
