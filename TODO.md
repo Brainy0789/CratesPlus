@@ -2,9 +2,9 @@
 
 (This is in order of priority)
 
-- [>] Make TileMap class completely load levels from JSON correctly.
-- [>] Make Player and wall collision
-- [>] Make crates pushable
-- [>] Add crate proper collision
-- [>] Map Editor
+- [x] Make TileMap class completely load levels from JSON correctly.
+- [x] Make Player and wall collision
+- [x] Make crates pushable
+- [x] Add crate proper collision
+- [x] Map Editor
 - [ ] Mod functionality
