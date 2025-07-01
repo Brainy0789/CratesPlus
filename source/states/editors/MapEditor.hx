@@ -1,4 +1,4 @@
-package states;
+package states.editors;
 
 import Std;
 import backend.MapConfig;

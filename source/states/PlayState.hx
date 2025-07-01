@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import states.LevelSelectState;
+import states.editors.MapEditor;
 
 class PlayState extends FlxState {
 	private var cfg:LevelGroupConfig;

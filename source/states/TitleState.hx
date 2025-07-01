@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import openfl.Lib;
 import states.LevelSelectState;
+import states.editors.MapEditor;
 
 class TitleState extends FlxState {
 	var music:Bool;

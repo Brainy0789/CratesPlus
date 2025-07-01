@@ -1,0 +1,15 @@
+{
+  "name": "My Mod",
+  "description": "",
+  "authors": ["Me", "Myself", "I"],
+  "homepage": "https://example.com/",
+  "modloaderversion": "1.0.0",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name": "Another Mod",
+      "version": ">=1.0.0",
+      "optional": false
+    }
+  ]
+}

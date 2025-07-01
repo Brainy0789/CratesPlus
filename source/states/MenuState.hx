@@ -1,8 +1,9 @@
 package states;
 
+import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
-import flixel.FlxG;
+import states.editors.MapEditor;
 import states.substates.GameSelectSubState;
 
 class MenuState extends FlxState
