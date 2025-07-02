@@ -15,29 +15,13 @@ class Paths {
 
 	public static inline var MODS:String = "mods/";
 
-	public static function getMapFile(name:String, checkMods:Bool = false):String
-	{
-		var p:String;
-
-		if (checkMods)
-			p = MODS + "data/levels/";
-		else
-			p = MAPS;
-
-		p = p + name;
+  public static function getMapFile(name:String):String {
+    var p = MAPS + name;
     return FileSystem.exists(p) ? p : null;
   }
 
-	public static function getDataFile(name:String, checkMods:Bool = false):String
-	{
-		var p:String;
-
-		if (checkMods)
-			p = MODS + "data/";
-		else
-			p = DATA;
-
-		p = p + name;
+  public static function getDataFile(name:String):String {
+    var p = DATA + name;
     return FileSystem.exists(p) ? p : null;
   }
 }
