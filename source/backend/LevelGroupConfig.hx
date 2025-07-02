@@ -1,6 +1,7 @@
 package backend;
 
 import Std;
+import backend.Paths;
 import haxe.Json;
 import sys.FileSystem;
 import sys.io.File;

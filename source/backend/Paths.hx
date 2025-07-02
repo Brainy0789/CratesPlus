@@ -15,6 +15,8 @@ class Paths {
 
 	public static inline var MODS:String = "mods/";
 
+	public static inline var PAGES:String = "assets/data/pages/";
+
   public static function getMapFile(name:String):String {
     var p = MAPS + name;
     return FileSystem.exists(p) ? p : null;

@@ -1,9 +1,11 @@
 package states;
 
+import backend.Web;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import states.editors.MapEditor;
+import states.settings.SettingsState;
 import states.substates.GameSelectSubState;
 
 class MenuState extends FlxState
@@ -43,11 +45,15 @@ class MenuState extends FlxState
                 case "Game Select":
                     FlxG.switchState(new GameSelectSubState());
                 case "Options":
-                    trace("Nothing yet.");
+					FlxG.switchState(new SettingsState());
                 case "Mod Menu":
                     FlxG.switchState(new ModMenu());
                 case "Crates":
                     FlxG.switchState(new LevelSelectState());
+				case "Crates Original":
+					Web.openWebPage("crates.html");
+				case "Crates 2 Original":
+					Web.openWebPage("crates2.html");
                 default:
                     trace("Unknown menu item: " + selectString + "\nCheck MenuState.hx, maybe?");
             }
