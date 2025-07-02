@@ -4,7 +4,6 @@ import backend.Web;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
-import states.WebViewState;
 import states.editors.MapEditor;
 import states.settings.SettingsState;
 import states.substates.GameSelectSubState;
@@ -52,9 +51,9 @@ class MenuState extends FlxState
                 case "Crates":
                     FlxG.switchState(new LevelSelectState());
 				case "Crates Original":
-					FlxG.switchState(new WebViewState("crates.html"));
+					Web.openWebPage("crates.html");
 				case "Crates 2 Original":
-					FlxG.switchState(new WebViewState("crates2.html"));
+					Web.openWebPage("crates2.html");
                 default:
                     trace("Unknown menu item: " + selectString + "\nCheck MenuState.hx, maybe?");
             }
