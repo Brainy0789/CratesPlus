@@ -4,11 +4,13 @@ import flixel.FlxG;
 
 class Player extends MovingTile {
 	public var tileMap:TileMap;
-
+	public var tileBelow:Tile;
 	public function new(tileMap:TileMap, gx:Int, gy:Int)
 	{
 		super(gx, gy, 0, 5);
 		this.tileMap = tileMap;
+		this.tileBelow = new Tile(gx, gy, 0, 1);
+		
     }
 
 	override public function update(elapsed:Float):Void

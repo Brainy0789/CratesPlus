@@ -1,14 +1,15 @@
 package states;
 
+import backend.CratesState;
 import backend.Web;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import states.editors.MapEditor;
+import states.editors.MasterEditor;
 import states.settings.SettingsState;
 import states.substates.GameSelectSubState;
-
-class MenuState extends FlxState
+class MenuState extends CratesState
 {
     var sections:Array<String>;
     var selected:Int = 0;
@@ -54,12 +55,14 @@ class MenuState extends FlxState
 					Web.openWebPage("crates.html");
 				case "Crates 2 Original":
 					Web.openWebPage("crates2.html");
+				case "Map Editor":
+					FlxG.switchState(new MapEditor());
                 default:
                     trace("Unknown menu item: " + selectString + "\nCheck MenuState.hx, maybe?");
             }
         }
 
         if (FlxG.keys.justPressed.SEVEN)
-			FlxG.switchState(new MapEditor());
+			FlxG.switchState(new MasterEditor());
     }
 }

@@ -15,6 +15,7 @@ class TileMap extends FlxGroup {
     public var startY:Int                 = 0;
     public var targetX:Int                = 0;
     public var targetY:Int                = 0;
+	public var solidTiles:Array<Int> = [4];
 
     public function new(path:String) {
         super();
@@ -83,7 +84,16 @@ class TileMap extends FlxGroup {
     }
 
     public function isBlocked(x:Int, y:Int):Bool {
-        return x < 0 || y < 0 || x >= width || y >= height || mapData[y][x] == 1;
+		var blocked = false;
+		for (i in solidTiles)
+		{
+			if (i == mapData[y][x])
+			{
+				blocked = true;
+				break;
+			}
+		}
+		return x < 0 || y < 0 || x >= width || y >= height || blocked;
     }
 
     public function crateAt(x:Int, y:Int):Bool {
